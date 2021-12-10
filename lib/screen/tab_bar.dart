@@ -33,8 +33,15 @@ class _TabBarScreenState extends State<TabBarScreen>
   void initState() {
     _tabController = TabController(vsync: this, length: 4);
     watchlistBloc = BlocProvider.of<WatchlistBloc>(context);
-
     watchlistBloc.add(FetchContactData());
+    _tabController.addListener(() {
+    
+      userCurrentTab = _tabController.index;
+      if(_tabController.indexIsChanging){
+         watchlistBloc
+          .add(TabChanged(index: userCurrentTab, contactList: contactdata));
+      }   
+    });
     super.initState();
   }
 
@@ -54,7 +61,7 @@ class _TabBarScreenState extends State<TabBarScreen>
           actions: [
             const ThemeSelector(),
             IconButton(
-                key: const ValueKey('sorting'),
+                key: const ValueKey('filterIcon'),
                 onPressed: () {
                   sortBtnAction(
                       context,
@@ -68,16 +75,33 @@ class _TabBarScreenState extends State<TabBarScreen>
           title: const Text(
             Strings.title,
           ),
+          
           bottom: TabBar(
             controller: _tabController,
             indicatorWeight: 4.0,
             indicatorColor: Colors.blue,
+            key: const ValueKey('tab'),
             tabs: Strings.name,
-            onTap: (index) => {
-              userCurrentTab = index,
-              watchlistBloc
-                  .add(TabChanged(index: index, contactList: contactdata))
-            },
+            // tabs: [
+            
+            //   for (int i = 1; i <= 4; i++)
+            //     Tab(
+            //         child: (Text(
+            //              'Contact $i',
+            //     style: const TextStyle(fontSize: 12, color: Colors.white),
+            //       key: ValueKey("tab$i"),
+            //     ))
+                                  
+            //     ),
+            // ],
+            
+            // onTap: (index) => {
+            
+            //   userCurrentTab = index,
+            //   watchlistBloc
+            //       .add(TabChanged(index: index, contactList: contactdata))
+            // },
+            
           ),
         ),
         body: BlocBuilder<WatchlistBloc, WatchlistState>(

@@ -9,6 +9,7 @@ Widget listItem(BuildContext context, List<Contact> contactdata) {
     width: double.infinity,
     child: ListView.builder(
         itemCount: contactdata.length,
+        key: const ValueKey('contactListView'),
         itemBuilder: (
           BuildContext context,
           int i,

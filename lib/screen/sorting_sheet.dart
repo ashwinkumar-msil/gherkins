@@ -32,6 +32,7 @@ class SortingSheet extends StatelessWidget {
               trailing: TextButton(
                 child: const Text(
                   Strings.done,
+                  key: ValueKey('Done'),
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
                 onPressed: () {
@@ -52,7 +53,7 @@ class SortingSheet extends StatelessWidget {
                   Strings.alphabetAscending,
                   Strings.alphabetDecending,
                   state,
-                  context),
+                  context,''),
             ),
             Divider(
               height: 2,
@@ -62,7 +63,7 @@ class SortingSheet extends StatelessWidget {
             ),
             Expanded(
               child: displayRow(Strings.userID, Strings.numericAscending,
-                  Strings.numericDecending, state, context),
+                  Strings.numericDecending, state, context,''),
             ),
           ],
         );
@@ -71,7 +72,7 @@ class SortingSheet extends StatelessWidget {
   }
 
   Widget displayRow(String title, String sortingType1, String sortingType2,
-      SortingBlocState state, BuildContext context) {
+      SortingBlocState state, BuildContext context, String key) {
     return Padding(
       padding: const EdgeInsets.only(left: 15, right: 15),
       child: Row(
@@ -99,6 +100,7 @@ class SortingSheet extends StatelessWidget {
     return TextButton(
       child: Text(
         text,
+        key: ValueKey(text),
         style: TextStyle(
             fontWeight: FontWeight.normal,
             fontSize: 18,
